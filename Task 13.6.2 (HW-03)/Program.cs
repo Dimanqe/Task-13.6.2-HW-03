@@ -9,7 +9,11 @@ namespace CountWords
     {
         static void Main(string[] args)
         {
-            string text = File.ReadAllText("C:\\Users\\dsank\\Desktop\\Text2.txt");
+            string desktopFolderPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string fileName = "Text1.txt";
+            string filePath = Path.Combine(desktopFolderPath, fileName);
+
+            string text = File.ReadAllText(filePath);
             var noPunctuationText = new string(text.Where(c => !char.IsPunctuation(c)).ToArray());
             var words = noPunctuationText.Split(new[] { ' ', '\t', '\n', '\r' }, StringSplitOptions.RemoveEmptyEntries);
             Dictionary<string, int> wordCounts = new Dictionary<string, int>();
@@ -33,7 +37,7 @@ namespace CountWords
             Console.WriteLine("Топ 10 самых повторяющихся слов в тексте:\n ");
             foreach (var pair in sortedWords)
             {
-                Console.WriteLine($"{count+1}-\"{pair.Key}\": {pair.Value} раз");
+                Console.WriteLine($"{count + 1}-\"{pair.Key}\": {pair.Value} раз");
                 count++;
                 if (count >= 10)
                 {
